@@ -51,8 +51,9 @@ subroutine linspace(xmin, xmax, n, x)
 	real :: dx
 	
 	dx = (xmax - xmin) / (n-1)
-
+	print *, xmin, xmax, n, dx
 	do i=1,n
 		x(i) = xmin + dx * (i-1)
+		print*, x(i)
 	enddo
 end subroutine
