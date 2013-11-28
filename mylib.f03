@@ -1,7 +1,13 @@
-integer function number_of_lines(input_file)
+module mylib
+	CONTAINS
+subroutine number_of_lines(input_file, N)
     implicit none
+	! dummy vars
+	character (len=30), intent(in) :: input_file
+	integer, intent(out) :: N
+	
+	! local vars
     integer :: temp, IOstatus, i
-    character (len=30) :: input_file
 
     open(unit=10, file=input_file, status="old", action="read")
     do
@@ -14,11 +20,8 @@ integer function number_of_lines(input_file)
     enddo
     
     close(10)
-
-    number_of_lines = i
-    return
-
-end
+    N = i
+end subroutine
 
 subroutine loadArrayFromFile(filename, number_of_lines, output_array)
     implicit none
@@ -56,3 +59,5 @@ subroutine linspace(xmin, xmax, n, x)
 		x(i) = xmin + dx * (i-1)
 	enddo
 end subroutine
+
+end module mylib

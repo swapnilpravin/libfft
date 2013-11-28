@@ -1,25 +1,39 @@
-program dft
+module libfft
+	use mylib
+	CONTAINS
+subroutine dft(input_file, x_fft)
     implicit none
+	! dummy vars
+	character (len=30) :: input_file
+	complex, dimension(:), allocatable :: x_fft
+	
+	! local vars
+	real, parameter :: PI = 4*atan(1.0)
     real, dimension(:), allocatable :: x
-    character (len=30) :: input_file, temp
-    integer i, n, number_of_lines
+    integer :: N, k, i
+	complex :: A, x_fft_sum
     
-    real, dimension(:), allocatable :: x_lin
-
-    call get_command_argument(1, input_file)
-
     ! Find how many lines are in the file
-    n = number_of_lines(input_file)
-
-    allocate(x(n))
-
-    call loadArrayFromFile(input_file, n, x)
+    call number_of_lines(input_file, N)
+	print *, N
+	
+	! Load data from input_file
+    allocate(x(N))
+    call loadArrayFromFile(input_file, N, x)
     
-    allocate(x_lin(11))
-    call linspace(0.0, 10.0, 11, x_lin)
+	! allocate memory for FFT array
+    allocate(x_fft(N))
+	
+	! Main Loop
+	do k=1,N
+		A = exp(cmplx(0,-2*PI*k/N))
+		x_fft_sum = 0
+		do i=1,N
+			x_fft_sum = x_fft_sum + x(i) * (A**i)
+		enddo
+		x_fft(k) = x_fft_sum
+	enddo	
 
-	do i=1,size(x_lin,1)
-		print *, x_lin(i)
-	enddo
+end subroutine
 
-end program
+end module libfft
