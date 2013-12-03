@@ -8,7 +8,9 @@ program main
 	call get_command_argument(1, input_file)
 	call dft(input_file, x_fft)
 	
-	do i=1,size(x_fft)
-		print *, x_fft(i)
+	open(unit=20, file="data_fft.dat", status="replace", action="write")
+	do i=1,size(x_fft)/2
+		write(20,*) sqrt(real(x_fft(i)*conjg(x_fft(i))))
 	enddo
+	close(20)
 end program main

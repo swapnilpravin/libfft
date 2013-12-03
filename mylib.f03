@@ -1,4 +1,5 @@
 module mylib
+
 	CONTAINS
 subroutine number_of_lines(input_file, N)
     implicit none
@@ -7,7 +8,7 @@ subroutine number_of_lines(input_file, N)
 	integer, intent(out) :: N
 	
 	! local vars
-    integer :: temp, IOstatus, i
+    integer :: temp=0, IOstatus=0, i=0
 
     open(unit=10, file=input_file, status="old", action="read")
     do
@@ -18,7 +19,7 @@ subroutine number_of_lines(input_file, N)
             i=i+1
         endif
     enddo
-    
+	    
     close(10)
     N = i
 end subroutine

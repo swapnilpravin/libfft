@@ -15,7 +15,6 @@ subroutine dft(input_file, x_fft)
     
     ! Find how many lines are in the file
     call number_of_lines(input_file, N)
-	print *, N
 	
 	! Load data from input_file
     allocate(x(N))

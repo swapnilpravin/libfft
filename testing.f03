@@ -1,14 +1,16 @@
 program test
+	use constants
+	use mylib
 	implicit none
-	complex :: a
-	real :: x
-	real, parameter :: PI=4*atan(1.0)
 	
-	x=3
-	a=(1,1)
+	integer, parameter :: N = 1000
+	real, dimension(N) :: x
+	integer :: i=0
 	
-	print *, cmplx(cos(PI),sin(PI))
-	print *, exp((0,PI))
-	print *, PI
-	
+	call linspace(0., 10*PI, N, x)
+	open(unit=10, file="data.dat", status="replace", action="write")
+	do i=1,N
+		write(10,*) x(i), (sin(10*x(i)) + sin(15*x(i)))
+	enddo
+	close(10)
 end program test
