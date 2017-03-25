@@ -1,4 +1,4 @@
 libfft
 ======
 
-An fft library
+An dft library
